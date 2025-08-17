@@ -3,14 +3,24 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
 const server = express();
 const PORT = process.env.PORT;
+
+connectDB();
 
 server.listen(PORT, () => {
 	console.log('Server listening on port 8080');
 });
-connectDB();
+
+
+const noteSchema = new mongoose.Schema({ title: String, content: String }, { timestamps: true });
+const Note = mongoose.model('Note', noteSchema);
+
+const newNote = new Note({ title: 'First note!', content: 'This is really cool!' });
+await newNote.save();
+
+const allNotes = await Note.find();
+console.log(allNotes);
 
 async function connectDB() {
 	try {
@@ -19,4 +29,4 @@ async function connectDB() {
 	} catch (error) {
 		console.log('Error connecting to database: ', error);
 	}
-}
+};
