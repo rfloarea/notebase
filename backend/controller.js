@@ -35,10 +35,20 @@ export async function findOneNote(req, res) {
 		console.error(error);
 	}
 };
-//
-//function updateOneNote(':/id') {
-//
-//};
+
+export async function updateOneNote(req, res) {
+	try {
+		const id = req.params.id;
+		const { title, content } = req.body;
+		const updatedNote = await Note.findByIdAndUpdate(id, { title, content }, { new: true }); // returns newly updated note
+		if (!updatedNote) return res.status(404).json({ message: 'No note found' });
+		res.status(200).json(updatedNote);
+		console.log(updatedNote);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal server error :( Could not update note' });
+		console.error(error);
+	}
+};
 //
 //function deleteOneNote('/:id') {
 //
