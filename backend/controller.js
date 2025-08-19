@@ -49,11 +49,30 @@ export async function updateOneNote(req, res) {
 		console.error(error);
 	}
 };
-//
-//function deleteOneNote('/:id') {
-//
-//};
-//
-//function deleteAllNotes() {
-//
-//};
+
+export async function deleteOneNote(req, res) {
+	try {
+		const id = req.params.id;
+		const note = await Note.findById(id);
+		if (!note) return res.status(404).json({ message: 'Note not deleted. Could not find :(' });
+		await Note.findByIdAndDelete(id);
+		res.status(200).json({ message: 'Note deleted!' });
+		console.log(`Deleted note: ${note}`);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal server error :( Could not delete note' });
+		console.error(error);
+	}
+};
+
+export async function deleteAllNotes(req, res) {
+	try {
+		const num = await Note.deleteMany({});
+		const count = num.deletedCount;
+		if (!count) return res.status(204).json({ message: 'No notes to delete.' });
+		res.status(200).json({ message: `${count} notes deleted!` });
+		console.log(`${count} notes deleted.`);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal server error. Could not delete all' });
+		console.error(error);
+	}
+};
