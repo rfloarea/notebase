@@ -22,10 +22,19 @@ export async function createNewNote(req, res) {
 		await res.status(500).json({ message: 'Internal server error :( Could not create note' });
 	}
 };
-//
-//function findOneNote('/:id') {
-//
-//};
+
+export async function findOneNote(req, res) {
+	try {
+		const id = req.params.id;
+		const note = await Note.findById(id);
+		res.status(201).json(note);
+		console.log(note);
+		if (!note) return res.status(404).json({ message: 'No note found :(' });
+	} catch (error) {
+		res.status(500).json({ message: 'Interal server error :( Could not find note' });
+		console.error(error);
+	}
+};
 //
 //function updateOneNote(':/id') {
 //
