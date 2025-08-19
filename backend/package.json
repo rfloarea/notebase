@@ -2,10 +2,10 @@
   "name": "notebase-backend",
   "version": "1.0.0",
   "description": "just another notetaking app for learning web development <3",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "roe",
