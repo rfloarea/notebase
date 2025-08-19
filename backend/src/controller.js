@@ -2,7 +2,7 @@ import { Note } from './model.js';
 
 export async function findAllNotes(req, res) {
 	try {
-		const allNotes = await Note.find();
+		const allNotes = await Note.find().sort({ createdAt: -1 }); // -1 sorts notes in desc. order (newest to oldest)
 		await res.status(200).json(allNotes);
 		console.log(`Find successful: ${allNotes}`);
 	} catch (error) {
